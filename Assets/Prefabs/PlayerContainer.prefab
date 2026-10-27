@@ -120,9 +120,9 @@ MonoBehaviour:
   groundedFriction: 500
   airBorneFriction: 50
   topSpeed: 25
-  jumpForce: 1000
+  jumpForce: 1500
   maxJumps: 2
-  gravity: 20
+  gravity: 50
   jumpCooldown: 0.3
   invalidGroundedLayer:
     serializedVersion: 2

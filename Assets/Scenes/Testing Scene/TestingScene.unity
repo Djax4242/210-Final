@@ -659,12 +659,8 @@ PrefabInstance:
       value: PlayerContainer
       objectReference: {fileID: 0}
     - target: {fileID: 2132661711032995869, guid: e9e30553a9fc8da47857366b38dc80a3, type: 3}
-      propertyPath: gravity
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 2132661711032995869, guid: e9e30553a9fc8da47857366b38dc80a3, type: 3}
-      propertyPath: jumpForce
-      value: 1500
+      propertyPath: maxJumps
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2553836917656275417, guid: e9e30553a9fc8da47857366b38dc80a3, type: 3}
       propertyPath: m_LocalPosition.x
