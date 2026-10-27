@@ -123,7 +123,7 @@ public partial class @PlayerInputActionsMap: IInputActionCollection2, IDisposabl
                     ""priority"": 0
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""FireRocket"",
                     ""type"": ""Button"",
                     ""id"": ""6063111f-3816-48b2-a411-cd2d8ed0ef01"",
                     ""expectedControlType"": """",
@@ -218,7 +218,7 @@ public partial class @PlayerInputActionsMap: IInputActionCollection2, IDisposabl
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interact"",
+                    ""action"": ""FireRocket"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -232,7 +232,7 @@ public partial class @PlayerInputActionsMap: IInputActionCollection2, IDisposabl
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_FireRocket = m_Player.FindAction("FireRocket", throwIfNotFound: true);
     }
 
     ~@PlayerInputActionsMap()
@@ -316,7 +316,7 @@ public partial class @PlayerInputActionsMap: IInputActionCollection2, IDisposabl
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_FireRocket;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -341,9 +341,9 @@ public partial class @PlayerInputActionsMap: IInputActionCollection2, IDisposabl
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Interact".
+        /// Provides access to the underlying input action "Player/FireRocket".
         /// </summary>
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @FireRocket => m_Wrapper.m_Player_FireRocket;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -379,9 +379,9 @@ public partial class @PlayerInputActionsMap: IInputActionCollection2, IDisposabl
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
+            @FireRocket.started += instance.OnFireRocket;
+            @FireRocket.performed += instance.OnFireRocket;
+            @FireRocket.canceled += instance.OnFireRocket;
         }
 
         /// <summary>
@@ -402,9 +402,9 @@ public partial class @PlayerInputActionsMap: IInputActionCollection2, IDisposabl
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
+            @FireRocket.started -= instance.OnFireRocket;
+            @FireRocket.performed -= instance.OnFireRocket;
+            @FireRocket.canceled -= instance.OnFireRocket;
         }
 
         /// <summary>
@@ -467,11 +467,11 @@ public partial class @PlayerInputActionsMap: IInputActionCollection2, IDisposabl
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "FireRocket" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnInteract(InputAction.CallbackContext context);
+        void OnFireRocket(InputAction.CallbackContext context);
     }
 }

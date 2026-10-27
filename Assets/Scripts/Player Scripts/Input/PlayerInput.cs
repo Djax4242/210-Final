@@ -19,5 +19,5 @@ public class PlayerInput: MonoBehaviour
     public Vector2 GetMouseInput() => _playerInputActionsMap.Player.Look.ReadValue<Vector2>();
     public Vector2 GetMoveInput() => _playerInputActionsMap.Player.Move.ReadValue<Vector2>();
     public bool GetJumpInput() => _playerInputActionsMap.Player.Jump.IsPressed();
-    public bool GetInteractInput() => _playerInputActionsMap.Player.Interact.IsPressed();
+    public bool GetRocketInput() => _playerInputActionsMap.Player.FireRocket.IsPressed();
 }

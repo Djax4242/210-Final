@@ -37,7 +37,7 @@
                     "priority": 0
                 },
                 {
-                    "name": "Interact",
+                    "name": "FireRocket",
                     "type": "Button",
                     "id": "6063111f-3816-48b2-a411-cd2d8ed0ef01",
                     "expectedControlType": "",
@@ -132,7 +132,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact",
+                    "action": "FireRocket",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
