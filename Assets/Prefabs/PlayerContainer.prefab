@@ -117,8 +117,11 @@ MonoBehaviour:
   playerInput: {fileID: 1420729676457303834}
   baseMoveSpeed: 6000
   counterAccelerationMultiplier: 0
-  groundedFriction: 500
-  airBorneFriction: 50
+  fullGripBlendSpeed: 250
+  lowGripBlendSpeed: 3
+  gripBuildTime: 0.6
+  noGripSpeed: 35
+  airBorneFriction: 5
   topSpeed: 25
   jumpForce: 1500
   maxJumps: 2
