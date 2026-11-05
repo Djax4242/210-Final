@@ -21,17 +21,26 @@ public class PlayerMovement : MonoBehaviour
     
     [Space]
     [Header("--- Movement Settings ---")]
-    [Tooltip("Base grounded move speed of the player")]
+    [Tooltip("How quickly input accelerates the player in the air")]
     [SerializeField] private float baseMoveSpeed;
     [Tooltip("Base speed gets multiplied by this when the player is trying to change direction")]
     [SerializeField] private float counterAccelerationMultiplier;
-    [Tooltip("When the player stops moving, apply this amount of counter movement to slow them down")]
-    [SerializeField] private float groundedFriction;
+    [Tooltip("How fast grounded velocity blends to where the player is pressing with full grip. Around 250 is one physics step")]
+    [SerializeField] private float fullGripBlendSpeed;
+    [Tooltip("Same as above but with no grip, like right after landing. Lower means momentum lasts longer")]
+    [SerializeField] private float lowGripBlendSpeed;
+    [Tooltip("Seconds on the ground to go from no grip to full grip, and seconds in the air to lose it")]
+    [SerializeField] private float gripBuildTime;
+    [Tooltip("Grip fades as the player goes from top speed up to this speed, and they have none at or above it")]
+    [SerializeField] private float noGripSpeed;
+    [Tooltip("The player counts as airborne while rising faster than this, so ground movement doesn't slow rocket jumps")]
+    [SerializeField] private float groundedRiseCutoff = 1f;
     [Tooltip("Friction applied when the player isn't grounded")]
     [SerializeField] private float airBorneFriction;
-    [Tooltip("Top speed using linearveloctity magnitutde")]
+    [Tooltip("Top horizontal speed the player can reach with input alone. Rockets can push them past this")]
     [SerializeField] private float topSpeed;
     private float moveSpeed;
+    private float grip = 1f;
     
     [Space]
     [Header("--- Jump Settings ---")]
@@ -72,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        // Get input and set input to zero when above top speed
+        // Get input
         Vector2 moveInput = playerInput.GetMoveInput();
         
         // Rotate the player rigidbody to face the cameras forward direction.
@@ -85,35 +94,66 @@ public class PlayerMovement : MonoBehaviour
         // After the rb is rotated, we use its foward and right to calulate an rb relative input
         Vector3 rbRelativeInput = (moveInput.x * playerRb.transform.right) + (moveInput.y * playerRb.transform.forward);
         
-        // Move the player using the rb relative input
-        playerRb.AddForce(rbRelativeInput * (baseMoveSpeed * Time.deltaTime));
+        // The grounded check takes a couple of physics steps to notice the player has left the ground,
+        // so count them as airborne while they're rising or ground movement eats the speed from rocket jumps
+        bool onGround = isGrounded && playerRb.linearVelocity.y <= groundedRiseCutoff;
+        UpdateGrip(onGround);
 
-        // Clamp the players movement so they dont exceed the max speed
-        Vector2 movementPlane = new Vector2(playerRb.linearVelocity.x, playerRb.linearVelocity.z);
-        movementPlane = Vector2.ClampMagnitude(movementPlane, topSpeed);
-        playerRb.linearVelocity = new Vector3(movementPlane.x, playerRb.linearVelocity.y, movementPlane.y);
+        if (onGround)
+        {
+            GroundedMovement(rbRelativeInput);
+        }
+        else
+        {
+            AirborneMovement(rbRelativeInput);
+        }
 
         // Extra gravity
         playerRb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
     }
 
+    private void UpdateGrip(bool onGround)
+    {
+        // Grip builds up on the ground and fades in the air
+        grip = Mathf.MoveTowards(grip, onGround ? 1f : 0f, Time.deltaTime / gripBuildTime);
+
+        // Moving faster than the player can run also takes grip away, so any burst of speed carries over to the ground
+        Vector3 flattenedVelocity = new Vector3(playerRb.linearVelocity.x, 0, playerRb.linearVelocity.z);
+        grip = Mathf.Min(grip, 1f - Mathf.InverseLerp(topSpeed, noGripSpeed, flattenedVelocity.magnitude));
+    }
+
+    private void GroundedMovement(Vector3 rbRelativeInput)
+    {
+        // Blend the players velocity towards where they're pressing. With full grip this is instant so
+        // changing direction is snappy, with low grip the player keeps their momentum and eases into it
+        Vector3 flattenedVelocity = new Vector3(playerRb.linearVelocity.x, 0, playerRb.linearVelocity.z);
+        Vector3 targetVelocity = Vector3.ClampMagnitude(rbRelativeInput, 1f) * topSpeed;
+        float blendSpeed = Mathf.Lerp(lowGripBlendSpeed, fullGripBlendSpeed, grip * grip * grip);
+        Vector3 newVelocity = Vector3.Lerp(flattenedVelocity, targetVelocity, 1f - Mathf.Exp(-blendSpeed * Time.deltaTime));
+        playerRb.AddForce(newVelocity - flattenedVelocity, ForceMode.VelocityChange);
+    }
+
+    private void AirborneMovement(Vector3 rbRelativeInput)
+    {
+        // Work out how much the input would change the players velocity this physics step
+        Vector3 flattenedVelocity = new Vector3(playerRb.linearVelocity.x, 0, playerRb.linearVelocity.z);
+        Vector3 inputVelocity = rbRelativeInput * (baseMoveSpeed * Time.deltaTime * Time.deltaTime / playerRb.mass);
+
+        // Input can only speed the player up to top speed. If something else pushed them past it
+        // (rocket jumps), input can steer and slow them down but wont add any more speed
+        float speedLimit = Mathf.Max(topSpeed, flattenedVelocity.magnitude);
+        Vector3 cappedVelocity = Vector3.ClampMagnitude(flattenedVelocity + inputVelocity, speedLimit);
+        playerRb.AddForce(cappedVelocity - flattenedVelocity, ForceMode.VelocityChange);
+    }
+
     private void Friction()
     {
-        // Friction that gets applied when the player stops moving to stop them from sliding around
+        // Friction that gets applied in the air, ground movement handles slowing down on its own
 
         if (!isGrounded)
         {
             Vector3 flattenedVelocity = new Vector3(playerRb.linearVelocity.x, 0, playerRb.linearVelocity.z);
             playerRb.AddForce(-flattenedVelocity * (airBorneFriction * Time.deltaTime));
-        }
-        else
-        {
-            Vector2 moveInput = playerInput.GetMoveInput();
-            if (moveInput.sqrMagnitude < 0.1f)
-            {
-                Vector3 flattenedVelocity = new Vector3(playerRb.linearVelocity.x, 0, playerRb.linearVelocity.z);
-                playerRb.AddForce(-flattenedVelocity * (groundedFriction * Time.deltaTime));
-            }
         }
     }
 
