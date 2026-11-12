@@ -12,7 +12,22 @@
   <component name="ChangeListManager">
     <list default="true" id="61b38672-10b1-45c4-954f-7878e0179492" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.210 Final/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.210 Final/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Thien Levels/ThienLevels.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Thien Levels/ThienLevels.unity" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Testing Scene/TestingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Testing Scene/TestingScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts/EnemyAnimations.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts/EnemyAnimations.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts/EnemyHeallth.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts/EnemyHeallth.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts/EnemyMovement.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts/EnemyMovement.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts/Laser.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts/Laser.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts/LaserBlast.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy Scripts/LaserBlast.cs.meta" beforeDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +56,11 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "cidr.known.project.marker": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
+<<<<<<< Updated upstream
     "git-widget-placeholder": "main",
+=======
+    "git-widget-placeholder": "feature",
+>>>>>>> Stashed changes
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
