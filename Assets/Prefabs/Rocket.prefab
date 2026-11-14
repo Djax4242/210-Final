@@ -99,6 +99,9 @@ MonoBehaviour:
   knockbackForce: 50
   knockbackRadius: 15
   upwardsMultiplier: 0.3
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1700850839872336047
 GameObject:
   m_ObjectHideFlags: 0
