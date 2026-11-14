@@ -15,6 +15,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] private float knockbackForce;
     [SerializeField] private float knockbackRadius;
     [SerializeField] private float upwardsMultiplier;
+    [Space]
     private Rigidbody rocketRb;
 
     
@@ -27,17 +28,43 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        bool directHit = false;
+        
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            if (collision.gameObject.TryGetComponent(out Enemy enemy))
+            {
+                directHit = true;
+                enemy.KillEnemy();
+            }
+        }
+        
         Collider[] foundColliders = Physics.OverlapSphere(transform.position, knockbackRadius);
 
         foreach (var collider in foundColliders)
         {
             if (collider.TryGetComponent(out Rigidbody playerRb))
             {
+                print("Found player rigidbody");
                 playerRb.AddExplosionForce(knockbackForce, transform.position, knockbackRadius, upwardsMultiplier, ForceMode.VelocityChange);
-                break;
             }
-        }
+
+            if (directHit) continue;
+            if (collider.gameObject.layer != LayerMask.NameToLayer("Enemy")) continue;
+            if (!collider.gameObject.TryGetComponent(out Enemy enemy)) continue;
+            
+            float distanceToEnemy = Vector3.Distance(enemy.transform.position, transform.position);
+            float damage = knockbackRadius / distanceToEnemy;
+                    
+            enemy.DealDamage(damage);
+        }   
         
         Destroy(gameObject);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, knockbackRadius);
     }
 }
