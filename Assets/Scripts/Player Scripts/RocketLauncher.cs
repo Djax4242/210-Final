@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RocketLauncher : MonoBehaviour
 {
+    private static readonly int ShootTrigger = Animator.StringToHash("ShootTrigger");
+
     /// <summary>
     ///
     ///     Handles launching rockets
@@ -15,6 +17,8 @@ public class RocketLauncher : MonoBehaviour
     [SerializeField] private Transform rocketSpawnPoint;
     [SerializeField] private GameObject rocketPrefab;
     [SerializeField] private float rocketCooldown;
+    [SerializeField] private Animator wandAnimator;
+    
     private PlayerInput playerInput;
     private bool canFireRocket = true;
 
@@ -31,6 +35,7 @@ public class RocketLauncher : MonoBehaviour
         {
            Instantiate(rocketPrefab, rocketSpawnPoint.position, rocketSpawnPoint.rotation);
            StartCoroutine(RocketCooldown());
+           wandAnimator.SetTrigger(ShootTrigger);
         }
     }
 
