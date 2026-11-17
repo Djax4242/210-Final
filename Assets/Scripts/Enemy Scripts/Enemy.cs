@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Image = UnityEngine.UI.Image;
 
 public class Enemy : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float startingHealth;
     private Transform _playerTransform;
     private float _enemyHealth;
+
+    [SerializeField] private Image healthForeground;
+    
     
     private void Awake()
     {
@@ -26,6 +30,8 @@ public class Enemy : MonoBehaviour
     {
         _enemyHealth -= damageAmount;
         if (_enemyHealth <= 0) KillEnemy();
+
+        healthForeground.fillAmount = _enemyHealth / startingHealth;
     }
 
     public void KillEnemy()
