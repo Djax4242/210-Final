@@ -15,6 +15,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] private float knockbackForce;
     [SerializeField] private float knockbackRadius;
     [SerializeField] private float upwardsMultiplier;
+    [SerializeField] private GameObject rocketExplosion;
     [Space]
     private Rigidbody rocketRb;
 
@@ -45,7 +46,6 @@ public class Rocket : MonoBehaviour
         {
             if (collider.TryGetComponent(out Rigidbody playerRb))
             {
-                print("Found player rigidbody");
                 playerRb.AddExplosionForce(knockbackForce, transform.position, knockbackRadius, upwardsMultiplier, ForceMode.VelocityChange);
             }
 
@@ -57,8 +57,9 @@ public class Rocket : MonoBehaviour
             float damage = knockbackRadius / distanceToEnemy;
                     
             enemy.DealDamage(damage);
-        }   
-        
+        }
+
+        Instantiate(rocketExplosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
