@@ -100,7 +100,7 @@ MonoBehaviour:
   knockbackForce: 50
   knockbackRadius: 15
   upwardsMultiplier: 0.3
-  rocketExplosion: {fileID: 6106531425252086231, guid: 09296435ee8128849ad1c984cc5cbe88, type: 3}
+  rocketExplosion: {fileID: 4618778857057681192, guid: c7f13062d226fb74a922d4d60016beec, type: 3}
 --- !u!1 &1120840939781257043
 GameObject:
   m_ObjectHideFlags: 0
