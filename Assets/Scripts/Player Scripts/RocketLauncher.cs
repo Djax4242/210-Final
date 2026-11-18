@@ -18,7 +18,7 @@ public class RocketLauncher : MonoBehaviour
     [SerializeField] private GameObject rocketPrefab;
     [SerializeField] private float rocketCooldown;
     [SerializeField] private Animator wandAnimator;
-    
+    [SerializeField] private ParticleSystem reloadVFX;
     private PlayerInput playerInput;
     private bool canFireRocket = true;
 
@@ -43,6 +43,7 @@ public class RocketLauncher : MonoBehaviour
     {
         canFireRocket = false;
         yield return new WaitForSeconds(rocketCooldown);
+        reloadVFX.Play();
         canFireRocket = true;
     }
 }
